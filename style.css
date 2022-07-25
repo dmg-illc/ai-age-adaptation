@@ -1,0 +1,106 @@
+button{
+	background-color: none;
+	border: 1px solid black;
+	color: black;
+	padding: 8px 15px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	border-radius: 50em;
+	font-size: 14px;
+	margin: 3px 3px !important;
+	cursor: pointer;
+}
+
+#selection-btn-1 {
+	text-align: left !important;
+	padding: 8px 25px;
+}
+
+#selection-btn-2 {
+	text-align: left !important;
+	padding: 8px 25px;
+}
+
+
+.selected{
+	border: 3px solid black;
+	padding: 6px 13px;
+}
+
+.action-step{
+	font-weight: 800;
+}
+
+.column.column-left {
+	float: left;
+	width: 20%;
+}
+
+.column.column-right {
+	float: left;
+	width: 80%;
+}
+
+.column.column-left.selection {
+	float: left;
+	width: 50%;
+}
+
+.column.column-right.selection {
+	float: left;
+	width: 50%;
+}
+.column.arrow {
+	float: left;
+	width: 50%;
+	background-color: none;
+	background-color: white !important;
+}
+
+.column.not-sure {
+	float: right;
+	align-items: right;
+	width: 50%;
+	background-color: white !important;
+}
+
+.row{
+	background-color: #f2f2f2;
+	margin-top: 0.5em;
+}
+
+
+/* Clear floats after the columns */
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.not-sure_button{
+	background-color: none;
+	border: none;
+	margin: 0px !important;
+	background-color: white;
+	padding: 0px !important;
+	font-style: italic;
+}
+
+#model-output{
+	border: 1px solid lightgreen;
+	color: black;
+	padding: 10px 25px;
+	border-radius: 50em;
+	margin-left: 3em;
+}
+
+#model-output-prompt{
+	border: 1px solid blue;
+	display: inline-block;
+	color: black;
+	padding: 10px 25px;
+	border-radius: 50em;
+	margin-bottom: 0.5em;
+	margin-right: auto;
+}

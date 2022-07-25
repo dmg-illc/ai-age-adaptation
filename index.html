@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Human(e) AI: Age Adaptation</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Exploring Age Adaptation of Conversational Systems</h1>
+ 
+        <br>
+        <h2 class="subtitle">About</h2>
+        <p>What if conversational agents would be able to adapt to human users? Unfortunately, state-of-the-art AI systems currently lack sophisticated adaptation capabilities. Our long-term goal is to develop artificial agents that can adapt to individuals/user groups at any level (age, expertise, language style, etc.) and that are perceived as trustable by users.</p>
+
+        <p>In the following project, we focused on users of different age groups, and asked:</p>
+        <ul>
+          <li> Can some degree of adaptation be achieved by training a state-of-the-art system with data targeted to specific age groups? </li>
+          <li> Does this lead to differences in the perceived degree of anthropomorphism, social presence, trust, appreciation and comprehensibility of the message? </li>
+        </ul>
+
+        <p>You can try our an open-source demo that showcases the results of the project below.</p>
+
+        <br>
+        <h2 class="subtitle">System adaptation</h2>
+        <p>Try it yourself. Select from the options below to produce corresponding adaptations:</p>
+
+        <div id="prompts" class="row">
+          <div class="column column-left"> 
+            <h3 class="action-step">Prompt</h3>
+          </div>
+          <div class="column column-right"> 
+            <div id="prompts-btns">
+              <button id="prompt-button-1" class="prompt-button">Hey.</button>
+              <button id="prompt-button-2" class="prompt-button">Hello, tell me about your latest holiday.</button>
+              <button id="prompt-button-3" class="prompt-button">Hi, how's it going?</button>
+              <button id="prompt-button-4" class="prompt-button">Can we talk?</button>
+              <button id="prompt-button-5" class="prompt-button">Good weather we're having.</button>
+            </div>
+          </div>
+        </div>
+
+        <div id='adaptation' hidden>
+          <div class="row-above">
+            <div class="column arrow"> 
+              <h3 class="action-step">↓</h3>
+            </div>
+            <div class="column not-sure"> 
+              <button id="" class="not-sure_button"></button>
+              <p hidden>Explanation of the next step.</p>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="column column-left"> 
+              <h3 class="action-step">Adaptation</h3>
+            </div>
+            <div class="column column-right"> 
+              <div id="adaptation-btns">
+                <button id="adaptation-button-1" class="adaptation-button">Adapted</button>
+                <button id="adaptation-button-2" class="adaptation-button">Non-adapted</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="model" hidden>
+          <div class="row-above">
+            <div class="column arrow"> 
+              <h3 class="action-step">↓</h3>
+            </div>
+            <div class="column not-sure"> 
+              <button id="" class="not-sure_button"></button>
+              <p hidden>Explanation of the next step.</p>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="column column-left"> 
+              <h3 class="action-step">Model</h3>
+            </div>
+            <div class="column column-right"> 
+              <div id="model-btns">
+                <button id="model-button-1" class="model-button">Bag of Words</button>
+                <button id="model-button-2" class="model-button">Discriminator</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="style" class="row" hidden>
+          <div class="row-above">
+            <div class="column arrow"> 
+              <h3 class="action-step">↓</h3>
+            </div>
+            <div class="column not-sure"> 
+              <button id="" class="not-sure_button"></button>
+              <p hidden>Explanation of the next step.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="column column-left"> 
+              <h3 class="action-step">Style</h3>
+            </div>
+            <div class="column column-right"> 
+              <div id="style-btns">
+                <button id="style-button-1" class="style-button">Younger</button>
+                <button id="style-button-2" class="style-button">Older</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="output" hidden>
+          <div class="row-above">
+            <div class="column arrow"> 
+              <h3 class="action-step">↓</h3>
+            </div>
+            <div class="column not-sure"> 
+              <button id="" class="not-sure_button"></button>
+              <p hidden>Explanation of the next step.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column column-left"> 
+              <h3 class="action-step">Model output</h3>
+            </div>
+            <div class="column column-right"> 
+              <p id="model-output-prompt">Prompt</p>
+              <p id="model-output">model output</p>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <h2 class="subtitle">Test yourself</h2>
+
+        <h3 class="action-step">Which one of the two outputs sounds like a text that could be written by a younger speaker?</h3>
+        <div id="age-comp">
+          <div class="row">
+            <div class="column column-left selection"> 
+              <button id="selection-btn-1" class="selection-button">Younger</button>
+            </div>
+            <div class="column column-right selection"> 
+              <button id="selection-btn-2" class="selection-button">Older</button>
+            </div>
+          </div>
+        </div>
+        <p id="hum-res-1">80% of our participands agrees with you</p>
+        <p id="hum-res-2">20% of our participands disagrees with you</p>
+        <p id="auto-res-1">80% our automatic evaluation agrees with you</p>
+        <p id="auto-res-2">20% our automatic evaluation agrees with you</p>
+      </div>
+    </section>
+    <script src="app.js"></script>
+  </body>
+</html>
