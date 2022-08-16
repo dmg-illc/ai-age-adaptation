@@ -6,7 +6,7 @@ button{
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	border-radius: 50em;
+	border-radius: 30px;
 	font-size: 14px;
 	margin: 3px 3px !important;
 	cursor: pointer;
@@ -83,15 +83,32 @@ button{
 	border: none;
 	margin: 0px !important;
 	background-color: white;
-	padding: 0px !important;
+	padding: 4px !important;
 	font-style: italic;
+	float: right;
+}
+
+#next-button {
+	background-color: none;
+	border: 1px solid black !important;
+	margin: 0px !important;
+	background-color: white;
+	padding: 8px 15px !important;
+	font-style: italic;
+	float: right;
+}
+
+#next-button:hover {
+	border: 2px solid lightgreen !important;
+	transition: 0.2s;
+	padding: 7px 14px !important;
 }
 
 #model-output{
 	border: 1px solid lightgreen;
 	color: black;
 	padding: 10px 25px;
-	border-radius: 50em;
+	border-radius: 30px;
 	margin-left: 3em;
 }
 
@@ -100,7 +117,13 @@ button{
 	display: inline-block;
 	color: black;
 	padding: 10px 25px;
-	border-radius: 50em;
+	border-radius: 30px;
 	margin-bottom: 0.5em;
 	margin-right: auto;
+}
+
+.step-explanation{
+	font-style: italic;
+	font-size: 0.8em;
+	margin-left: 1em;
 }

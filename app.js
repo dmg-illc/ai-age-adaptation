@@ -22,8 +22,13 @@ const selectionBtn2 = document.getElementById('selection-btn-2');
 const allSelecteButtons = document.getElementsByClassName('selection-button');
 let selectionOpt1, selectionOpt2;
 
+const allNotSureButtons = document.getElementsByClassName('step-explanation');
+const notSureButton1 = document.getElementById('not-sure-button-1');
+const notSureButton2 = document.getElementById('not-sure-button-2');
+const notSureButton3 = document.getElementById('not-sure-button-3');
+const notSureButton4 = document.getElementById('not-sure-button-4');
+
 const humRes1 = document.getElementById('hum-res-1');
-const humRes2 = document.getElementById('hum-res-2');
 const autoRes1 = document.getElementById('auto-res-1');
 const autoRes2 = document.getElementById('auto-res-2');
 
@@ -33,9 +38,20 @@ let promptSelection, adaptationSelection, modelSelection, styleSelection;
 
 const modelOutput = document.getElementById('model-output');
 
+const nextButton = document.getElementById('next-button');
+let currentExample = 0;
+
+
 function removeAllSelectionsForClass(className, buttonClass) {
     for (let i = 0; i < buttonClass.length; i++) {
         buttonClass[i].classList.remove(className);
+    }
+}
+
+function addHiddenForClass(className, buttonClass) {
+    for (let i = 0; i < buttonClass.length; i++) {
+        /* set hidden to true  */
+        buttonClass[i].hidden = true;
     }
 }
 
@@ -251,7 +267,68 @@ outputs = [
     }
 ]
 
+comp_outputs = [
+    {
+        'model': 'disc',
+        'question': 'a younger',
+        'output_a': "I've been wanting it for years and will be in a very near, if very close, near, for the long,.. a long,",
+        'output_b': "This article explains why:Why Do You Like To Drink? By David HockneyThe first few weeks after leaving the gym, I'm always feeling tired.", 
+        'a_class_old': 0.9989238381,
+        'a_human_agreement': 0.2, 
+        'b_class_old': 0.8684927225
+    },{
+        'model': 'disc',
+        'question': 'a younger',
+        'output_a': "This article covers how I can help.CreatCos CreditsCos MarshTylerSMM CosSCosTyler CosCosCosCosM TheMWCosDwKS CosMMKW CosKSK CosCosCos",
+        'output_b': "The conversation is now closed and the question of the future is settled. There's not a very good thing you've just not, and we've now all agreed that the first-year team is going the future and the next team is,", 
+        'a_class_old': 0.9978559613,
+        'a_human_agreement': 0.6, 
+        'b_class_old': 0.002254046733
+    },{
+        'model': 'disc',
+        'question': 'an older',
+        'output_a': "Great weather today, it was warm. We were up for about 45 minutes for this morning. The place has it all",
+        'output_b': "This article discusses a variety options options options of marketing tech marketing marketing web blog blogger startup Google designer blog Google blogger blog startup Google tech website tech blogger startup", 
+        'a_class_old': 0.8466967344,
+        'a_human_agreement': 0.8, 
+        'b_class_old': 0.001062063966
+    },{
+        'model': 'bow',
+        'question': 'an older',
+        'output_a': "We have been in contact with some friends in the UK and we are working hard to secure your tickets.",
+        'output_b': "The answer is no, as it's impossible to talk", 
+        'a_class_old': 0.001559708151,
+        'a_human_agreement': 0.0, 
+        'b_class_old': 0.9272737503
+    },{
+        'model': 'bow',
+        'question': 'an older',
+        'output_a': "My name is Jules, and I'm from the Philippines in the Philippines. So far I have been able to travel around and experience many places.I recently moved here to start a career",
+        'output_b': "This week, we talk to the guy who made a film about a group of people who have lost their minds, about how the mind has been corrupted, about why you", 
+        'a_class_old': 0.001543430379,
+        'a_human_agreement': 0.0, 
+        'b_class_old': 0.9849150181
+    },{
+        'model': 'bow',
+        'question': 'a younger',
+        'output_a': "Where are you staying in Europe? What are the most popular holiday destinations?I",
+        'output_b': "I am very interested in seeing a lot more of your work", 
+        'a_class_old': 0.05407825112,
+        'a_human_agreement': 1.0, 
+        'b_class_old': 0.7702322602
+    }
+]
+
+function put_everywhere_default_on_details() {
+    notSureButton1.textContent = "Show details +";
+    notSureButton2.textContent = "Show details +";
+    notSureButton3.textContent = "Show details +";
+    notSureButton4.textContent = "Show details +";
+}
+
 function checkRes() {
+    put_everywhere_default_on_details() 
+
     // PROMPT
     if (promptSelection == 1) {
         prompt.textContent = "Hey.";
@@ -351,14 +428,22 @@ function checkRes() {
         modelOutput.textContent = outputs[4+20].output
     }
 
-    selectionOpt1 = outputs[0+5];
-    selectionOpt2 = outputs[0+10];
 
-    selectionBtn1.textContent = selectionOpt1.output;
-    selectionBtn2.textContent = selectionOpt2.output;
+    selectionBtn1.textContent = comp_outputs[currentExample].output_a;
+    selectionBtn2.textContent = comp_outputs[currentExample].output_b;
 
-    autoRes1.textContent = parseFloat(selectionOpt1.class_prob_young).toFixed(2) * 100 + "% credence auto-classified as young";
-    autoRes2.textContent = parseFloat(selectionOpt1.class_prob_old).toFixed(2) * 100 + "% credence auto-classified as old";
+     if (selectionBtn1.classList.contains('selected')) {
+        humRes1.textContent = parseFloat(comp_outputs[currentExample].a_human_agreement).toFixed(2) * 100 + "% of our participants agree with you";
+        autoRes1.textContent = (parseFloat(comp_outputs[currentExample].a_class_old).toFixed(2) * 100) + "% credence auto-classified as younger";
+        autoRes2.textContent = 100 - (parseFloat(comp_outputs[currentExample].a_class_old).toFixed(2) * 100) + "% credence auto-classified as older";
+    } else if (selectionBtn2.classList.contains('selected')) {
+        humRes1.textContent = 100 - (parseFloat(comp_outputs[currentExample].a_human_agreement).toFixed(2) * 100) + "% of our participants agree with you";
+        autoRes1.textContent = (parseFloat(comp_outputs[currentExample].b_class_old).toFixed(2) * 100) + "% credence auto-classified as older";
+        autoRes2.textContent = 100 - (parseFloat(comp_outputs[currentExample].b_class_old).toFixed(2) * 100) + "% credence auto-classified as younger";
+    }
+
+
+    addHiddenForClass('hidden', allNotSureButtons);
 }
 
 promptButton1.addEventListener('click', () => {
@@ -457,14 +542,77 @@ styleButton2.addEventListener('click', () => {
 selectionBtn1.addEventListener('click', () => {
     removeAllSelectionsForClass('selected', allSelecteButtons);
     selectionBtn1.classList.add('selected');
+    document.getElementById('comp-results').removeAttribute("hidden");
     checkRes()
 });
 
 selectionBtn2.addEventListener('click', () => {
     removeAllSelectionsForClass('selected', allSelecteButtons);
     selectionBtn2.classList.add('selected');
+    document.getElementById('comp-results').removeAttribute("hidden");
     checkRes()
 });
+
+notSureButton1.addEventListener('click', () => {
+    if (document.getElementById('step-expl-1').hidden == true) {
+        addHiddenForClass('hidden', allNotSureButtons);
+        document.getElementById('step-expl-1').removeAttribute("hidden");
+        notSureButton1.textContent = "Hide details –";
+    } else {
+        addHiddenForClass('hidden', allNotSureButtons);
+        notSureButton1.textContent = "Show details +";
+    }
+});
+notSureButton2.addEventListener('click', () => {
+    if (document.getElementById('step-expl-2').hidden == true) {
+        addHiddenForClass('hidden', allNotSureButtons);
+        document.getElementById('step-expl-2').removeAttribute("hidden");
+        notSureButton2.textContent = "Hide details -";
+    } else {
+        addHiddenForClass('hidden', allNotSureButtons);
+        notSureButton2.textContent = "Show details +";
+    }
+});
+notSureButton3.addEventListener('click', () => {
+    if (document.getElementById('step-expl-3').hidden == true) {
+        addHiddenForClass('hidden', allNotSureButtons);
+        document.getElementById('step-expl-3').removeAttribute("hidden");
+        notSureButton3.textContent = "Hide details -";
+    } else {
+        addHiddenForClass('hidden', allNotSureButtons);
+        nput_everywhere_default_on_details() 
+    }
+});
+notSureButton4.addEventListener('click', () => {
+    if (document.getElementById('step-expl-4').hidden == true) {
+        addHiddenForClass('hidden', allNotSureButtons);
+        document.getElementById('step-expl-4').removeAttribute("hidden");
+        notSureButton4.textContent = "Hide details -";
+    } else {
+        addHiddenForClass('hidden', allNotSureButtons);
+        put_everywhere_default_on_details() 
+    }
+});
+
+
+nextButton.addEventListener('click', () => {
+    document.getElementById('comp-results').hidden = true;
+    removeAllSelectionsForClass('selected', allSelecteButtons);
+
+    document.getElementById('older_younger_question').textContent = "Which one of the two outputs sounds like a text that could be written by " + comp_outputs[currentExample].question + " speaker?"
+
+    if (currentExample < comp_outputs.length - 1) {
+        currentExample += 1;
+    } else {
+        currentExample = 0;
+    }
+
+    selectionBtn1.textContent = comp_outputs[currentExample].output_a;
+    selectionBtn2.textContent = comp_outputs[currentExample].output_b;
+
+    
+});  
+
 
 selectionBtn1.addEventListener("load", checkRes());
 
