@@ -19,23 +19,32 @@
   <body>
     <section class="section">
       <div class="container">
-        <h1 class="title">Exploring Age Adaptation of Conversational Systems</h1>
- 
-        <br>
-        <h2 class="subtitle">About</h2>
-        <p>What if conversational agents would be able to adapt to human users? Unfortunately, state-of-the-art AI systems currently lack sophisticated adaptation capabilities. Our long-term goal is to develop artificial agents that can adapt to individuals/user groups at any level (age, expertise, language style, etc.) and that are perceived as trustable by users.</p>
-
-        <p>In the following project, we focused on users of different age groups, and asked:</p>
-        <ul>
-          <li> Can some degree of adaptation be achieved by training a state-of-the-art system with data targeted to specific age groups? </li>
-          <li> Does this lead to differences in the perceived degree of anthropomorphism, social presence, trust, appreciation and comprehensibility of the message? </li>
-        </ul>
-
-        <p>You can try our an open-source demo that showcases the results of the project below.</p>
+        <div class="columns">
+          <div class="column">
+            <h1 class="title">Exploring Age Adaptation of Conversational Systems</h1>
+    
+            <br>
+            <h2 class="subtitle">About</h2>
+            <p>What if conversational agents would be able to adapt in the way they interact with humans? Unfortunately, state-of-the-art AI systems currently lack sophisticated adaptation capabilities. Our long-term goal is to develop artificial agents that can adapt to individuals/user groups at any level (age, expertise, language style, etc.) and that are perceived as trustable by users.</p>
+            <br>
+            <p>In the following project, we focused on users of different age groups, and asked:</p>
+            <br>
+            <ul>
+              <li> <b>•</b> <i>Can some degree of adaptation be achieved by training a state-of-the-art system with data targeted to specific age groups? </i></li>
+              <li> <b>•</b> <i>Does this lead to differences in the perceived degree of anthropomorphism, social presence, trust, appreciation, and comprehensibility of the message? </i></li>
+            </ul>
+            <br>
+            <p>You can try our an open-source demo that showcases the results of the project below.</p>
+          </div>
+          <div class="column">
+            <!--add image here--> 
+            <img src="ages.gif" alt="image" width="800" height="800">
+          </div>
+        </div>
 
         <br>
         <h2 class="subtitle">System adaptation</h2>
-        <p>Try it yourself. Select from the options below to produce corresponding adaptations:</p>
+        <p>Try it yourself. The state-of-the-art language model would first receive a prompt with corresponding criteria to generate an adapted output. Select a combinations from the options below to see what kind of adaptation different systems produced:</p>
 
         <div id="prompts" class="row">
           <div class="column column-left"> 
@@ -61,7 +70,14 @@
               <button id="not-sure-button-1" class="not-sure_button">Show details +</button>
             </div>
             <div>
-              <p hidden class="step-explanation" id="step-expl-1">This option allows you to choose whether the resulting output will be adapted towards a particular age group or not.</p>
+              <p hidden class="step-explanation" id="step-expl-1">
+                This option allows you to choose whether the resulting output will be adapted towards a particular age group or not. 
+                <br>
+                <br>
+                In the non-adaptive setting, the model takes a prompt and generates an output by sampling from the distribution of words that are most likely to follow the prompt. 
+                <br>
+                <br>
+                In the age adapted setting, the model is trying to generate text that is controlled for age.</p>
             </div>
           </div>
           
@@ -87,7 +103,14 @@
               <button id="not-sure-button-2" class="not-sure_button">Show details +</button>
             </div>
             <div>
-              <p hidden class="step-explanation" id="step-expl-2">In the bag-of-words a text (such as a sentence or a document) is represented as the bag (multiset) of its words, disregarding grammar and even word order but keeping multiplicity. On the contrary, the discriminator tries to distinguish real data from the data created by the generator.</p>
+              <p hidden class="step-explanation" id="step-expl-2">
+                The Bag of Words  method relies on lists of words that are representative of each age group’s language. The words are automatically extracted from the full version of the dataset via a frequency-based approach. In particular, for each age group, the words are ordered by frequency and the most frequent words are kept. The words that are in both age groups are removed. This leaves a list of words that are specific to each age group.
+                
+                <br>
+                <br>
+
+                The discriminator model is a classifier that is trained to distinguish between two groups. In this case, the classifier is used to distinguish between two groups. The classifier is trained using a pre-trained language model. The discriminator parameters that are then used in this age-adaptive setting come from the training epoch with the highest test accuracy.
+                </p>
             </div>
           </div>
           
@@ -113,7 +136,7 @@
               <button id="not-sure-button-3" class="not-sure_button">Show details +</button>
             </div>
             <div>
-              <p hidden class="step-explanation" id="step-expl-3">The following selection allows you to adapt the example model output towards a younger or an older age group.</p>
+              <p hidden class="step-explanation" id="step-expl-3">This option allows you to adapt the example model output towards a younger or an older age group. The age adaption is evaluated using a classifier model. You can see the evaluation of the classifier model along with the resulting output.</p>
             </div>
           </div>
 
@@ -139,7 +162,7 @@
               <button id="not-sure-button-4" class="not-sure_button">Show details +</button>
             </div>
             <div>
-              <p hidden class="step-explanation" id="step-expl-4">The model output is an example of what the selected model preoduced given the particular selection you made.</p>
+              <p hidden class="step-explanation" id="step-expl-4">The model output is an example of what the selected model produced, given the particular criteria selection you have made. You can see how well our classifer evaluated the output below.</p>
             </div>
           </div>
           <div class="row">
@@ -151,10 +174,29 @@
               <p id="model-output">model output</p>
             </div>
           </div>
+          <div id="output-stats"> 
+            <br>
+            <p id="output-auto-res-1">80% model probability toward ‘younger’;</p>
+            <p id="output-auto-res-2">20% model probability toward ‘older‘;</p>
+          </div>
         </div>
 
+        
+
+        <br>
+        <br>
         <br>
         <h2 class="subtitle">Test yourself</h2>
+
+        <p>To test whether adaptations produced by the language models are detectable, we paired outputs from different models together and asked human evaluators to judge which one sounded more like coming from an older or a younger speaker. In total, we collected 9,000 judgments from 467 different participants. 
+
+        <br>
+        <br>
+
+        How would you do yourself? Try to guess the age group of the following examples and see if your guesses agree with our human evaluators. 
+        </p>
+
+        <br>
 
         <h3 class="action-step" id="older_younger_question">Which one of the two outputs sounds like a text that could be written by a younger speaker?</h3>
 
@@ -173,12 +215,41 @@
           <button id="next-button" class="not-sure_button">Next example →</button>
         </div>
         <div id="comp-results" hidden> 
+          <br>
           <p id="hum-res-1">80% of our participands agrees with you</p>
           <p id="auto-res-1">80% our automatic evaluation agrees with you</p>
           <p id="auto-res-2">20% our automatic evaluation agrees with you</p>
         </div>
-      </div>
+     
+
+        <br>
+        <br>
+        <br>
+
+      
+        <div class="columns">
+          <div class="column" style="padding-right: 5rem;">
+            <h2 class="subtitle">Find out more</h2>
+            <p>This project is a joint work of the <a href="https://dmg-illc.github.io/dmg/">Dialogue Modeling Group</a> and the <a hreaf="https://www.uva.nl/en/about-the-uva/organisation/faculties/faculty-of-social-and-behavioural-sciences/disciplines/communication/communication-science.html">Department of Communication Science</a> at the University of Amsterdam.</p>
+            <br>
+            <p>The work received funding from the University of Amsterdam’s Research Priority Area Human(e) AI and from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (grant agreement No. 819455).</p>
+            <br>
+            <br>
+            <button href="" id="paper_button">Read the full paper (coming soon)</button>
+          </div>
+          <div class="column">
+            <br>
+          </div>
+        </div>
+      </container>
+      <br>
+      <br>
+      <br>
     </section>
+
+    
+
     <script src="app.js"></script>
   </body>
 </html>
+
